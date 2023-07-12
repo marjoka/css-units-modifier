@@ -16,9 +16,11 @@ class CssUnitsModifier {
         () => {
           const { filename } = compilation.options.output;
           const file = compilation.getAsset(filename);
+          const regex = new RegExp(`${this.unit}\\b(?<!\\d+)`, 'g')
+
           compilation.updateAsset(
             filename,
-            new sources.RawSource(file.source.source().replaceAll(this.unit, this.newUnit))
+            new sources.RawSource(file.source.source().replaceAll(regex, this.newUnit))
           );
         }
       );
